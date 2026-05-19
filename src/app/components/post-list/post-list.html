@@ -1,0 +1,17 @@
+<app-alert [mensaje]="Se han cargado las publicaciones de ....."></app-alert>
+<div class="container">
+  <h2>Publicaciones Recientes</h2>
+  <div class="grid">
+    @for (post of posts; track post.id) {
+      <div class="card">
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.body }}</p>
+        <button class="btn-detail">Ver más detalles</button>
+      </div>
+    } @empty {
+      <p>Cargando publicaciones desde el servidor...</p>
+    }
+  </div>
+</div>
+
+
