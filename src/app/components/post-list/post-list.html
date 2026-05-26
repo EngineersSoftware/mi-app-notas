@@ -1,17 +1,26 @@
-<app-alert [mensaje]="Se han cargado las publicaciones de ....."></app-alert>
-<div class="container">
-  <h2>Publicaciones Recientes</h2>
-  <div class="grid">
-    @for (post of posts; track post.id) {
-      <div class="card">
-        <h3>{{ post.title }}</h3>
-        <p>{{ post.body }}</p>
-        <button class="btn-detail">Ver más detalles</button>
-      </div>
-    } @empty {
-      <p>Cargando publicaciones desde el servidor...</p>
-    }
-  </div>
+<div class="flex justify-between items-center mb-8">
+  <h1 class="text-3xl font-bold text-gray-800">Feed de Articulos</h1>
+  <button (click)="reloadData()"
+  class="px-4 py-2 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition">Recargar datos</button>
 </div>
 
+<div class="grid gap-6">
+  @if (loading()) {
+    <div class="p-6 bg-white rounded-lg shadow-sm border border-gray-100 text-gray-600">
+      Cargando artículos...
+    </div>
+  }
 
+  @if (error()) {
+    <div class="p-6 bg-red-50 rounded-lg border border-red-200 text-red-700">
+      {{ error() }}
+    </div>
+  }
+
+  @for (post of posts(); track post.id) {
+    <div appHighlightCard class="p-6 bg-white rounded-lg shadow-sm border border-gray-100">
+      <h2 class="text-xl font-medium text-gray-900">{{ post.title }}</h2>
+      <p class="text-gray-500 mt-2">{{ post.body | truncate:80 }}</p>
+    </div>
+  }
+</div>
